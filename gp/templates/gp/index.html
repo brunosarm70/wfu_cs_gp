@@ -1,0 +1,108 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="UTF-8">
+        
+        <title>WFU CS Game Platform</title>    
+       
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    </head>
+
+    <body>
+        
+        
+        <div class="background">
+            <h1 id="bigtitle">WFU CS Game Platform</h1>
+            <div class="container">
+                <div class="row centered-form">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-10 col-md-8 col-md-offset-2 col-sm-offset-1">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><center>Sign in</center></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form role="form">
+                                            <div class="form-group">
+                                                <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="Username">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                            </div>
+
+                                            <input type="submit" value="Login" class="btn btn-success btn-block">
+
+                                            <br>
+                                            <center><a href="/admin">Administration site</a> or <a href="/home">continue as a guest</a></center>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-10 col-md-8 col-md-offset-2 col-sm-offset-1">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><center>Register</center></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form role="form">
+                                            <div class="form-group">
+                                                <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
+                                            </div>
+
+                                            <input type="submit" value="Sign up" class="btn btn-info btn-block">
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
+
+

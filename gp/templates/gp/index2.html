@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>WFU CS Gameplatform</title>
+    </head>
+    <body>
+        
+        <form>
+            User<input action="/hola" method="post">
+            Password<input type='password'>
+            <button>Log in</button>
+        </form>
+        
+        Hola
+        <p>
+            {% for tournament in tournaments %}
+            <div>
+                <h1>{{ tournament }}<br></h1>
+                Start date: {{ tournament.datetime }}<br>
+                Game: {{ tournament.game }}<br>
+                Amount of players: {{ tournament.minPlayers }}-{{ tournament.maxPlayers }}
+            </div>
+            {% endfor %}
+    
+    </body>
+</html>

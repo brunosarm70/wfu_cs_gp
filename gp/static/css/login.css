@@ -1,0 +1,39 @@
+#bigtitle{
+    
+    text-align: center;
+    margin-top: 5%;
+    font-family: "Avenir" !important;
+    color: black;
+    
+}
+
+body{
+    /*background-color: #9E7E38;*/
+    background-image: url("../img/background.JPG");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    
+}
+
+.background{
+    background-color: rgba(158, 126, 56, 0.6);
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.centered-form{
+	margin-top: 60px;
+}
+
+.centered-form .panel{
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+}
+
