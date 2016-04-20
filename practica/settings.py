@@ -53,6 +53,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'practica.urls'
 
+LOGIN_REDIRECT_URL = '/home'
+LOGIN_URL = '/login/'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

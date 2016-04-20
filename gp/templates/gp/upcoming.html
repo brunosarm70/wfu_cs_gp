@@ -2,14 +2,14 @@
 
 {% block tabs %}
 <li><a href="/home">Home</a></li>
-<li class="dropdown">
+<li class="dropdown active">
 						<a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tournaments<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="/tournaments/upcoming/">Upcoming</a></li>
+							<li class="active"><a href="/tournaments/upcoming/">Upcoming</a></li>
 							<li><a href="/tournaments/finished">Finished</a></li>
 						</ul>
 					</li>
-<li class="active"><a href="/games">Games</a></li>
+<li><a href="/games">Games</a></li>
 {% endblock tabs %}
 
 
@@ -21,14 +21,17 @@
   
   <!-- START THE FEATURETTES -->
     
-  <h1 id="title_games">Games</h1>
+  <h1 id="title_games">Upcoming tournaments</h1>
 
-  {% for game in games %}
+  {% for tournament in tournaments %}
   <div class="row featurette">
     <div class="col-md-12">
-      <h3 class="featurette-heading" style="font-size: 3em;">{{ game }}       <span class="text-muted" style="font-size: 20px;">Players: {{ game.minPlayers }}-{{ game.maxPlayers }}</span></h3>
-      <p class="lead">{{ game.description }}</p>
-      <a href="{% url 'gp.views.detailed_game' pk=game.pk %}"><button type="button" class="btn btn-info">Details</button></a>
+      <h3 class="featurette-heading" style="font-size: 3em;">{{ tournament }}       <span class="text-muted" style="font-size: 20px;">Date: {{ tournament.datetime }}</span></h3>
+      <p class="lead">{{ tournament.description }}</p>
+        <h4>Type: {{ tournament.tournament_type }}</h4>
+        <h4>Game: {{ tournament.game }}</h4>
+        <br>
+      <a href=""><button type="button" class="btn btn-info">Details</button></a>
     </div>
   </div>
 

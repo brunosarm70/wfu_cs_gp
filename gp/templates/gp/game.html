@@ -1,0 +1,104 @@
+{% extends 'gp/base.html' %}
+
+{% block tabs %}
+<li><a href="/home">Home</a></li>
+<li class="dropdown">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tournaments<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="/tournaments/upcoming/">Upcoming</a></li>
+							<li><a href="/tournaments/finished">Finished</a></li>
+						</ul>
+					</li>
+<li class="active"><a href="/games">Games</a></li>
+{% endblock tabs %}
+
+
+
+{% block content %}
+
+
+
+<div class="container marketing">
+  
+  
+  <div class="blog-header">
+    <div class="container">
+      <h1 class="blog-title">{{ game }}</h1>
+      <p class="lead blog-description">Players: {{ game.minPlayers }}-{{ game.maxPlayers }}</p>
+    </div>
+  </div>
+  
+  
+
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-sm-12 blog-main">
+
+        <div class="blog-post">
+          <h2 class="blog-post-title">Description</h2>
+          <!--<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>-->
+
+          <p>{{ game.description | linebreaks }}</p>
+          <hr style="margin-top:40px; margin-bottom:40px">
+          
+              <!--
+              <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
+            <blockquote>
+              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            </blockquote>
+            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+          -->
+          
+          <h2>Rules</h2>
+          <p>{{ game.rules | linebreaks }}</p>
+          <!--
+            <h3>Sub-heading</h3>
+          <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+          <pre><code>Example code block</code></pre>
+          <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+          <h3>Sub-heading</h3>
+          <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <ul>
+            <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
+            <li>Donec id elit non mi porta gravida at eget metus.</li>
+            <li>Nulla vitae elit libero, a pharetra augue.</li>
+          </ul>
+          <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
+          <ol>
+            <li>Vestibulum id ligula porta felis euismod semper.</li>
+            <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
+            <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+          </ol>
+          <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>-->
+        </div><!-- /.blog-post -->
+
+        <!--
+        <nav>
+          <ul class="pager">
+            <li><a href="#">Older</a></li>
+            <li class="disabled"><a href="#">Newer</a></li>
+          </ul>
+        </nav>-->
+
+      </div><!-- /.blog-main -->
+
+    </div><!-- /.row -->
+
+  </div><!-- /.container -->
+  
+  
+  <!-- FOOTER -->
+  <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p>&copy; 2015 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+  </footer>
+  
+</div>
+
+
+
+
+{% endblock content %}
+

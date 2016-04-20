@@ -24,15 +24,16 @@ class University(models.Model):
     
     
 class Player(models.Model):
-    firstName = models.CharField(max_length=100)
-    lastName = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    email = models.EmailField(max_length=254)
+    user = models.ForeignKey('auth.User', default=0)
+    #firstName = models.CharField(max_length=100)
+    #lastName = models.CharField(max_length=100)
+    #password = models.CharField(max_length=100)
+    #email = models.EmailField(max_length=254)
     country = models.ForeignKey(Country, default = 0)
     university = models.ForeignKey(University, default = 0)
     
     def __str__(self):
-        return self.firstName + " " + self.lastName
+        return self.user.get_full_name()
     
 
 class Game(models.Model):
@@ -40,6 +41,7 @@ class Game(models.Model):
     minPlayers = models.IntegerField()
     maxPlayers = models.IntegerField()
     description = models.TextField()
+    rules = models.TextField(null = True)
     
     def __str__(self):
         return self.name
@@ -96,6 +98,7 @@ class Tournament(models.Model):
     tournament_type = models.CharField(max_length=100)
     matches = models.ManyToManyField(Match, blank = True)
     datetime = models.DateTimeField(null = True, default = None)
+    description = models.TextField(null = True)
     
     def __str__(self):
         return self.name
