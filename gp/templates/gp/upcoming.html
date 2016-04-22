@@ -3,12 +3,12 @@
 {% block tabs %}
 <li><a href="/home">Home</a></li>
 <li class="dropdown active">
-						<a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tournaments<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li class="active"><a href="/tournaments/upcoming/">Upcoming</a></li>
-							<li><a href="/tournaments/finished">Finished</a></li>
-						</ul>
-					</li>
+  <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tournaments<b class="caret"></b></a>
+  <ul class="dropdown-menu">
+   <li class="active"><a href="/tournaments/upcoming/">Upcoming</a></li>
+   <li><a href="/tournaments/finished">Finished</a></li>
+ </ul>
+</li>
 <li><a href="/games">Games</a></li>
 {% endblock tabs %}
 
@@ -20,7 +20,7 @@
 <div class="container marketing">
   
   <!-- START THE FEATURETTES -->
-    
+  
   <h1 id="title_games">Upcoming tournaments</h1>
 
   {% for tournament in tournaments %}
@@ -28,10 +28,40 @@
     <div class="col-md-12">
       <h3 class="featurette-heading" style="font-size: 3em;">{{ tournament }}       <span class="text-muted" style="font-size: 20px;">Date: {{ tournament.datetime }}</span></h3>
       <p class="lead">{{ tournament.description }}</p>
-        <h4>Type: {{ tournament.tournament_type }}</h4>
-        <h4>Game: {{ tournament.game }}</h4>
-        <br>
+      <h4>Type: {{ tournament.tournament_type }}</h4>
+      <h4>Game: {{ tournament.game }}</h4>
+      <br>
       <a href=""><button type="button" class="btn btn-info">Details</button></a>
+        {% if tournaments in registered_t %}
+            <a href=""><button type="button" class="btn btn-danger btn-lg">Unregister</button></a>
+        {% else %}
+            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Register</button>   
+        {% endif %}
+        
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                  </div>
+                  <div class="modal-body">
+                      Browse
+                    <span class="btn btn-default btn-file">
+                         <input type="file">
+                    </span>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
     </div>
   </div>
 

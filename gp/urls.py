@@ -14,8 +14,10 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view),
     url(r'^register/$', views.register_view),
     
+    url(r'^edit/profile/',views.edit_profile),
     url(r'^home/', views.home),
     url(r'^games/', views.games),
+    url(r'^myprofile/',views.profile),
     url(r'^tournaments/upcoming/', views.upcoming),
     url(r'^game/(?P<pk>[0-9]+)/$', views.detailed_game),
 ]

@@ -1,0 +1,74 @@
+{% extends 'gp/base.html' %}
+
+{% block tabs %}
+<li><a href="/home">Home</a></li>
+<li class="dropdown">
+  <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tournaments<b class="caret"></b></a>
+  <ul class="dropdown-menu">
+   <li><a href="/tournaments/upcoming/">Upcoming</a></li>
+   <li><a href="/tournaments/finished">Finished</a></li>
+ </ul>
+</li>
+<li class="active"><a href="/games">Games</a></li>
+{% endblock tabs %}
+
+
+
+{% block content %}
+
+
+
+<div class="container marketing">
+  
+  
+  <div class="blog-header">
+    <div class="container">
+      <h1 class="blog-title">{{ user.get_full_name }}</h1>
+      <p class="lead blog-description">username: {{ user.username }}</p>
+    </div>
+  </div>
+  
+  
+
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-sm-12 blog-main">
+
+        <div class="blog-post">
+          <h2 class="blog-post-title">Information</h2>
+          <!--<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>-->
+
+          <p>{{ player.country | linebreaks }}</p>
+          <hr style="margin-top:40px; margin-bottom:40px">
+          
+          <h2>Rules</h2>
+          <p>{{ player.university | linebreaks }}</p>
+          
+          <hr style="margin-top:40px; margin-bottom:40px">
+          <a href="/edit/profile/"><button class="btn btn-default btn-warning">Edit information</button></a>
+          
+          
+        </div><!-- /.blog-post -->
+
+
+      </div><!-- /.blog-main -->
+
+    </div><!-- /.row -->
+
+  </div><!-- /.container -->
+  
+  
+  <!-- FOOTER -->
+  <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p>&copy; 2015 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+  </footer>
+  
+</div>
+
+
+
+
+{% endblock content %}

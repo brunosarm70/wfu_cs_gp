@@ -25,10 +25,6 @@ class University(models.Model):
     
 class Player(models.Model):
     user = models.ForeignKey('auth.User', default=0)
-    #firstName = models.CharField(max_length=100)
-    #lastName = models.CharField(max_length=100)
-    #password = models.CharField(max_length=100)
-    #email = models.EmailField(max_length=254)
     country = models.ForeignKey(Country, default = 0)
     university = models.ForeignKey(University, default = 0)
     

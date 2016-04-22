@@ -47,21 +47,20 @@
 					{% endblock tabs %}
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-                    
+					
 					{% if user.is_authenticated %}
-                    <li class="dropdown">
+					<li class="dropdown">
 						<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ user }}<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="javascript:void(0)">My profile</a></li>
-							<li><a href="javascript:void(0)">My tournaments</a></li>
-							<li><a href="javascript:void(0)">Something else here</a></li>
+							<li><a href="/myprofile/">My profile</a></li>
+							<li><a href="">My tournaments</a></li>
 							<li class="divider"></li>
 							<li><a href="/logout/">Logout</a></li>
 						</ul>
 					</li>
-                    {% else %}
-                    <li><a href="/">Sign Up</a></li>
-                    {% endif %}
+					{% else %}
+					<li><a href="/">Sign Up</a></li>
+					{% endif %}
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</nav>
