@@ -20,9 +20,26 @@
 <div class="container marketing">
   
   <!-- START THE FEATURETTES -->
+    
+    {% if error or success %}
+        
+        {% if error %}
+            <div class="alert alert-danger">
+              {{ message }}
+            </div>
+        {% endif %}
+        {% if success %}
+            <div class="alert alert-success">
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endif %}
+    
+    
+    
   
   <h1 id="title_games">Upcoming tournaments</h1>
-
+    
   {% for tournament in tournaments %}
   <div class="row featurette">
     <div class="col-md-12">
@@ -31,34 +48,68 @@
       <h4>Type: {{ tournament.tournament_type }}</h4>
       <h4>Game: {{ tournament.game }}</h4>
       <br>
-      <a href=""><button type="button" class="btn btn-info">Details</button></a>
-        {% if tournaments in registered_t %}
-            <a href=""><button type="button" class="btn btn-danger btn-lg">Unregister</button></a>
+      <!--<a href=""><button type="button" class="btn btn-info">Details</button></a>-->
+        {% if tournament in registered_t %}
+            
+        
+                <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal2{{ tournament.pk }}">Unregister</button>   
+        
         {% else %}
-            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Register</button>   
+            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal{{ tournament.pk }}">Register</button>   
         {% endif %}
         
-
+        
             <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="myModal2{{tournament.pk}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel">Unregister in {{ tournament }}</h4>
                   </div>
-                  <div class="modal-body">
-                      Browse
-                    <span class="btn btn-default btn-file">
-                         <input type="file">
-                    </span>
+                    <form role="role" method="post" action="/tournaments/unregister/">{% csrf_token %}
+                          Are you sure you want to unregister from the {{ tournament }}? 
+                          <div class="modal-footer">
+                              
+                              <form role="form" action ="/unregister/" method="post">{% csrf_token %}
+                                        <input type="hidden" name="tournament" value="{{ tournament.pk }}">
+                                        <!--<a href=""><button type="button" class="btn btn-danger btn-lg">Unregister</button></a>-->
+                                    
+                              
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                  <button type="submit" class="btn btn-success">Confirm</button>
+                            </form>
+                          </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+        
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal{{tournament.pk}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Register in {{ tournament }}</h4>
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
+                    <form role="role" method="post" action="/tournaments/register/" enctype="multipart/form-data">{% csrf_token %}
+                          <div class="modal-body">
+                                    Browse
+                                    <input name="docfile" type="file">
+                                    <input type="hidden" name="tournament" value="{{ tournament.pk }}">
+                            </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                          </div>
+                    </form>
                 </div>
               </div>
             </div>

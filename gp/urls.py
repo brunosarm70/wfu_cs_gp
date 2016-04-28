@@ -18,6 +18,8 @@ urlpatterns = [
     url(r'^home/', views.home),
     url(r'^games/', views.games),
     url(r'^myprofile/',views.profile),
-    url(r'^tournaments/upcoming/', views.upcoming),
+    url(r'^tournaments/upcoming/$', views.upcoming),
+    url(r'^tournaments/unregister/$', views.unregister),
     url(r'^game/(?P<pk>[0-9]+)/$', views.detailed_game),
+    url(r'^tournaments/register/$', views.register_in_a_tournament),
 ]

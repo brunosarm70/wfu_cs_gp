@@ -57,8 +57,7 @@ def detailed_game(request, pk):
 
 
 
-# Upcoming tournaments view ('/tournaments/upcoming/')
-def upcoming(request):
+def upcoming_queries(request):
     # query all the unstarted tournaments ordered by date
     tournaments = Tournament.objects.filter(status='Unstarted').order_by('datetime')
     
@@ -69,9 +68,26 @@ def upcoming(request):
         registered_codes = Code.objects.filter(player = pPlayer)
         for code in registered_codes:
             registered_tournaments.append(code.tournament)
+            
+    parameters = [tournaments, registered_tournaments]
+    
+    return parameters
+
+
+
+# Upcoming tournaments view ('/tournaments/upcoming/')
+def upcoming(request):    
+    
+    # call the necessary queries
+    queries = upcoming_queries(request)
+    
+    # set the flags at 0 because there are no messages to display
+    error = 0
+    success = 0
+    msg = ""
     
     # template to display all the upcoming tournaments
-    return render(request, 'gp/upcoming.html', {'tournaments': tournaments, 'registered_t' : registered_tournaments})
+    return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg, 'error': error, 'success': success})
 
 
 
@@ -88,6 +104,7 @@ def profile(request):
     
     # template to display player details
     return render(request, 'gp/profile.html', {'player': player})
+
 
 
 
@@ -144,11 +161,155 @@ def logout_view(request):
 
 
 
+def register_in_a_tournament2(request, pk):
+    msg = ""
+    
+    # query the specific tournament
+    tournament = get_object_or_404(Tournament, pk=pk)
+    player = Player.objects.get(user=request.user)
+    
+    code = Code.objects.filter(player = player, tournament = tournament).count()
+    if code > 0:
+        msg = "El jugador ya se ha registrado en el torneo."
+        queries = upcoming_queries(request)
+        return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg})
+    
+    # if the tournament exist
+    if not tournament==None:
+        # if the tournament status is equals to "Unstarted"
+        if tournament.status == "Unstarted": 
+            # player get register in the tournament
+            new_code = Code.objects.create(tournament = tournament, player = player, url = None)
+            new_code.save()
+            
+            msg = "Player registered in " + str(tournament)
+            queries = upcoming_queries(request)
+            return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg})
+    
+    queries = upcoming_queries(request)
+    return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg})
+
+
+
+
 def register_in_a_tournament(request):
-    return render(request, 'gp/upcoming.html')
+    # initialize the message to be displayed in case of error or success
+    msg = ""
+    # set the flags at 0
+    error = 0
+    success = 0
+    
+    if request.method == 'POST':
+        # get the parameters (the code and the tournament id)
+        pk = request.POST.get('tournament', '')
+        
+        if len(request.FILES) == 0:
+            msg += "There wasn't any files attached."
+            
+            # set the error flag at 1
+            error = 1
+            queries = upcoming_queries(request)
+            return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg, 'error': error, 'success': success})
+
+        
+        url = request.FILES['docfile']
+
+        # query the specific tournament and the player doing the registration
+        tournament = get_object_or_404(Tournament, pk=pk)
+        player = Player.objects.get(user=request.user)
+    
+        # verify that doesn't exist a code for that tournament related to that player
+        code = Code.objects.filter(player = player, tournament = tournament).count()
+        if code > 0:
+            msg += "The player is already registered in the tournament."
+            
+            # set the error flag at 1
+            error = 1
+            queries = upcoming_queries(request)
+            return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg, 'error': error, 'success': success})
+
+        # verify that the file has a .py extension
+        if url.content_type != 'text/x-python-script':
+            msg += "The uploaded file should has the .py extension."
+            # set the error flag at 1
+            error = 1
+            queries = upcoming_queries(request)
+            return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg, 'error': error, 'success': success})
+        
+        
+        # if the tournament exist
+        if not tournament==None:
+            # if the tournament status is equals to "Unstarted"
+            if tournament.status == "Unstarted": 
+                # player get register in the tournament
+                new_code = Code.objects.create(tournament = tournament, player = player, url = url)
+                new_code.save()
+
+                msg += "Player registered in " + str(tournament) + "."
+                # set 
+                success = 1
+                queries = upcoming_queries(request)
+                return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg, 'error': error, 'success': success})
+            else:
+                error = 1
+                msg += "The registration period for this tournament has close."
+        else:
+            error = 1
+            msg += "The tournament doesn't exist."
+            
+            
+    # if there are no messages to display, redirect to /tournaments/upcoming
+    if(error == 0 and success == 0):
+        return HttpResponseRedirect('/tournaments/upcoming/')
+    
+    
+    queries = upcoming_queries(request)
+    return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg, 'error': error, 'success': success})
 
 
 
+
+
+
+def unregister(request):
+    # set the flags at 0
+    success = 0
+    error = 0
+    msg = "There's been an error unregistering the player."
+    
+    if request.method == 'POST':
+        # get the primary key of the tournament from the request
+        tournament_pk = request.POST.get('tournament', '')
+        
+        # verify if the player and the tournament exist
+        if Player.objects.filter(user = request.user).count() > 0 and Tournament.objects.filter(pk = tournament_pk).count() > 0:
+            # get the specific player and tournament
+            player = Player.objects.get(user = request.user)
+            tournament = Tournament.objects.get(pk = tournament_pk)
+            
+            # verify that the player has a registered code for the tournament
+            codes = Code.objects.filter(tournament = tournament, player = player).count()
+            if(codes > 0):
+                # delete the code from the database
+                Code.objects.get(tournament = tournament, player = player).delete()
+                
+                # set the success flag at 1
+                success = 1
+                msg = "Player unregistered from " + str(tournament) + " successfully."
+                
+                queries = upcoming_queries(request)
+                return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg, 'error': error, 'success': success})
+            else:
+                # set the error flag at 1
+                error = 1
+                msg = "The player wasn't registered for this tournament."
+        
+    
+    if not error and not success:
+        return HttpResponseRedirect('/tournaments/upcoming/')
+    
+    queries = upcoming_queries(request)
+    return render(request, 'gp/upcoming.html', {'tournaments': queries[0], 'registered_t' : queries[1], 'message': msg, 'error': error, 'success': success})
 
 
 def edit_profile(request):

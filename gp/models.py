@@ -101,9 +101,9 @@ class Tournament(models.Model):
     
     
 class Code(models.Model):
-    url = models.FileField()
+    url = models.FileField(upload_to="./codes/", blank=True, null=True)
     player = models.ForeignKey(Player, default = 0)
     tournament = models.ForeignKey(Tournament, default = 0)
     
     def __str__(self):
-        return "Code of " + self.player + " for the " + self.tournament    
+        return "Code of " + str(self.player) + " for the " + str(self.tournament)  
