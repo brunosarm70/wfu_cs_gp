@@ -9,7 +9,7 @@
    <li><a href="/tournaments/finished">Finished</a></li>
  </ul>
 </li>
-<li class="active"><a href="/games">Games</a></li>
+<li><a href="/games">Games</a></li>
 {% endblock tabs %}
 
 
@@ -23,8 +23,7 @@
   
   <div class="blog-header">
     <div class="container">
-      <h1 class="blog-title">{{ user.get_full_name }}</h1>
-      <p class="lead blog-description">username: {{ user.username }}</p>
+      <h1 class="blog-title">My profile</h1>
     </div>
   </div>
   
@@ -37,17 +36,46 @@
       <div class="col-sm-12 blog-main">
 
         <div class="blog-post">
-          <h2 class="blog-post-title">Information</h2>
+          <h2>Information</h2>
           <!--<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>-->
+        
+            <h5 class="featurette-heading" style="font-size: 2em;"><span class="text-muted" style="font-size: 20px;">First Name</span>     {{ user.first_name }}</h5>
+            <h5 class="featurette-heading" style="font-size: 2em; margin-top:10px"><span class="text-muted" style="font-size: 20px;">Last Name</span>     {{ user.last_name }}</h5>
+            <h5 class="featurette-heading" style="font-size: 2em; margin-top:10px"><span class="text-muted" style="font-size: 20px;">Username</span>     {{ user.username }}</h5>
+            <h5 class="featurette-heading" style="font-size: 2em; margin-top:10px"><span class="text-muted" style="font-size: 20px;">Email</span>     {{ user.email }}</h5>
 
-          <p>{{ player.country | linebreaks }}</p>
+        
+
+    
           <hr style="margin-top:40px; margin-bottom:40px">
           
-          <h2>Rules</h2>
-          <p>{{ player.university | linebreaks }}</p>
           
-          <hr style="margin-top:40px; margin-bottom:40px">
-          <a href="/edit/profile/"><button class="btn btn-default btn-warning">Edit information</button></a>
+            <h2>Statistics</h2><br>
+            <div class="panel panel-default">
+            <table class="table equalDivided">
+                <tr class="active">
+                    <td class="centerCol"></td>
+                    <td class="centerCol"><strong>Won</strong></td>
+                    <td class="centerCol"><strong>Lost</strong></td>
+                </tr>
+                <tr>
+                    <td class="centerCol">Matches</td>
+                    <td class="centerCol"><span class="badge">{{wins}}</span></td>
+                    <td class="centerCol"><span class="badge">{{losses}}</span></td>
+                </tr>
+                <tr>
+                    <td class="centerCol">Tournaments</td>
+                    <td class="centerCol"><span class="badge">{{won_tournaments}}</span></td>
+                    <td class="centerCol"><span class="badge">{{lost_tournaments}}</span></td>
+                </tr>
+            </table>
+               
+            </div>
+            
+            
+        <hr style="margin-top:40px; margin-bottom:40px">
+        <a href="/edit/profile/"><button class="btn btn-warning">Edit information</button></a>
+          
           
           
         </div><!-- /.blog-post -->
@@ -63,7 +91,6 @@
   <!-- FOOTER -->
   <footer>
     <p class="pull-right"><a href="#">Back to top</a></p>
-    <p>&copy; 2015 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
   </footer>
   
 </div>

@@ -19,7 +19,12 @@ urlpatterns = [
     url(r'^games/', views.games),
     url(r'^myprofile/',views.profile),
     url(r'^tournaments/upcoming/$', views.upcoming),
+    url(r'^tournaments/finished/$', views.finished),
     url(r'^tournaments/unregister/$', views.unregister),
+    url(r'^tournaments/change_code/$', views.change_code),
+    url(r'^tournaments/view_results/$', views.view_results),
     url(r'^game/(?P<pk>[0-9]+)/$', views.detailed_game),
     url(r'^tournaments/register/$', views.register_in_a_tournament),
+    
+    url(r'^runt/(?P<pk>[0-9]+)/$', views.runtournament),
 ]

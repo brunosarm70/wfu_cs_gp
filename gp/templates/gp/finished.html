@@ -1,0 +1,68 @@
+{% extends 'gp/base.html' %}
+
+{% block tabs %}
+<li><a href="/home">Home</a></li>
+<li class="dropdown active">
+  <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tournaments<b class="caret"></b></a>
+  <ul class="dropdown-menu">
+   <li><a href="/tournaments/upcoming/">Upcoming</a></li>
+   <li class="active"><a href="/tournaments/finished/">Finished</a></li>
+ </ul>
+</li>
+<li><a href="/games">Games</a></li>
+{% endblock tabs %}
+
+
+
+{% block content %}
+
+
+<div class="container marketing">
+  
+  <h1><center>Finished tournaments</center></h1>
+    
+  {% for tournament in tournaments %}
+  <div class="row featurette">
+    <div class="col-md-12">
+      <h3 class="featurette-heading" style="font-size: 3em;">{{ tournament }}       <span class="text-muted" style="font-size: 20px;">Date: {{ tournament.datetime }}</span></h3>
+      <p class="lead">{{ tournament.description }}</p>
+      <h4>Type: {{ tournament.tournament_type }}</h4>
+      <a href="{% url 'gp.views.detailed_game' pk=tournament.game.pk %}"><h4>Game: {{ tournament.game }}</h4></a>
+      <h4>Player per match: {{ tournament.players_per_match }}</h4>
+      <h4>Games to win the match: {{ tournament.games_to_win_the_match }}</h4>
+      <h4>Registered players: {{ tournament.n_registered_players }}</h4>
+      <br>
+      <!--<a href=""><button type="button" class="btn btn-info">Details</button></a>-->
+        
+        
+                   
+        
+        <form role="role" method="post" action="/tournaments/view_results/" enctype="multipart/form-data">{% csrf_token %}
+            <input type="hidden" name="tournament" value="{{ tournament.pk }}">
+            <button type="submit" class="btn btn-info btn-lg">View results</button> 
+
+        </form>
+        
+           
+    </div>
+  </div>
+
+  <hr class="featurette-divider">
+  {% endfor %}
+  
+  <!-- /END THE FEATURETTES -->
+
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p>&copy; 2015 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+  </footer>
+
+</div><!-- /.container -->
+
+
+{% endblock content %}
+
+
+

@@ -238,20 +238,22 @@ body {
 
 
 .row .tournament{
-    
     margin-top: 40px;
     margin-bottom: 40px;
-    
 }
 
 
 #title_games{
     margin-top: 40px;
     margin-bottom: 40px;
-    font-size: 5em;
+    font-size: 4em;
     text-align: center;
     font-family: "Avenir Next";
 }
+
+
+
+
 
 
 .form-edit{
@@ -284,6 +286,10 @@ body {
 
 
 
+
+
+
+
 /*
  * Globals
  */
@@ -295,7 +301,7 @@ body {
 }
 
 body {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
   color: #555;
 }
 
@@ -309,6 +315,7 @@ h6, .h6 {
   font-weight: normal;
   color: #333;
 }
+
 
 
 /*
@@ -453,4 +460,14 @@ h6, .h6 {
 }
 .blog-footer p:last-child {
   margin-bottom: 0;
+}
+
+
+
+table.equalDivided tr td {
+    width:20%; 
+}
+
+td.centerCol{
+    text-align: center;
 }

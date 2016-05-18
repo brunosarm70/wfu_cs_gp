@@ -1,0 +1,178 @@
+{% extends 'gp/base.html' %}
+
+{% block tabs %}
+<li><a href="/home">Home</a></li>
+<li class="dropdown">
+  <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tournaments<b class="caret"></b></a>
+  <ul class="dropdown-menu">
+   <li><a href="/tournaments/upcoming/">Upcoming</a></li>
+   <li class="active"><a href="/tournaments/finished">Finished</a></li>
+ </ul>
+</li>
+<li><a href="/games">Games</a></li>
+{% endblock tabs %}
+
+
+
+{% block content %}
+
+
+
+<div class="container marketing">
+  
+  
+  <div class="blog-header">
+    <div class="container">
+      <h1 class="blog-title">{{ tournament.name }}</h1>
+      <p class="lead blog-description">Winner: {{ tournament.winner }}</p>
+    </div>
+  </div>
+  
+
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-sm-12 blog-main">
+
+        <div class="blog-post">
+          <h2 class="blog-post-title">Results</h2>
+            <br><br>
+          <!--<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>-->
+
+        {% if tournament.tournament_type.name = "Bracket" %}
+  
+            {% for round, matches in matches_per_round %}
+                <h3>Round #{{ round }}</h3>
+                <br>
+                {% for number, match in matches %}
+                    <div class="panel panel-default">
+                      <!-- Default panel contents -->
+                      <div class="panel-heading">Match #{{ number }}</div>
+
+                      <!-- Table -->
+                      <table class="table equalDivided">
+                          <tr>
+                              <th><center>Player</center></th> 
+                              <th><center>Games won</center></th>
+                          </tr>
+                          {% if match|length_is:"1" %}
+                                {% for competitor in match %}
+                                      <tr class="success">
+                                          <td><center>{{ competitor.player }}</center></td>
+                                          <td><center>Player qualified automatically to the next round.</center></td>
+                                      </tr>
+                                {% endfor %}
+                          {% else %}
+                              {% for competitor in match %}
+                              {% if competitor.won_games = tournament.games_to_win_the_match %}
+                                <tr class="success">
+                                    <td><center>{{ competitor.player }}</center></td>
+                                    <td><center>{{ competitor.won_games }}</center></td>
+                                </tr>
+                              {% else %}
+                                <tr>
+                                    <td><center>{{ competitor.player }}</center></td>
+                                    <td><center>{{ competitor.won_games }}</center></td>
+                                </tr>
+                              {% endif %}
+                              {% endfor %}
+                          {% endif %}
+                      </table>
+                    </div>
+                {% endfor %}
+                <br><br>
+            {% endfor %}
+        {% elif tournament.tournament_type.name = "League" %}
+            <div class="panel panel-default">
+              <!-- Default panel contents -->
+              <div class="panel-heading">Standings</div>
+
+              <!-- Table -->
+              <table class="table equalDivided">
+                  <tr>
+                    <th><center>Pos.</center></th>
+                    <th><center>Player</center></th> 
+                    <th><center>Wins</center></th>
+                    <th><center>Losses</center></th>
+                    <th><center>Total score</center></th>
+                  </tr>
+                  {% for row in table %}
+                          {% if row|first = 1 %}
+                          <tr class="success">
+                              {% for col in row %}
+                                <td><center>{{col}}</center></td>
+                              {% endfor %}
+                          </tr>
+                            {%else%}
+                  <tr>
+                              {% for col in row %}
+                                <td><center>{{col}}</center></td>
+                              {% endfor %}
+                          </tr>
+                            {%endif%}
+                  
+                  {% endfor %}
+              </table>
+            </div>
+            <br><br>
+            
+            <h2>Matches</h2><br><br>
+            
+            {% for number, match in matches_per_round %}
+                    <div class="panel panel-default">
+                      <!-- Default panel contents -->
+                      <div class="panel-heading">Match #{{ number }}</div>
+
+                      <!-- Table -->
+                      <table class="table equalDivided">
+                          <tr>
+                              <th><center>Player</center></th> 
+                              <th><center>Games won</center></th>
+                          </tr>
+                              {% for competitor in match %}
+                              {% if competitor.won_games = tournament.games_to_win_the_match %}
+                                <tr class="success">
+                                    <td><center>{{ competitor.player }}</center></td>
+                                    <td><center>{{ competitor.won_games }}</center></td>
+                                </tr>
+                              {% else %}
+                                <tr>
+                                    <td><center>{{ competitor.player }}</center></td>
+                                    <td><center>{{ competitor.won_games }}</center></td>
+                                </tr>
+                              {% endif %}
+                              {% endfor %}
+                      </table>
+                    </div>
+            {% endfor %}
+            
+            
+            
+        {% endif %}
+            
+        
+            
+        </div><!-- /.blog-post -->
+
+
+      </div><!-- /.blog-main -->
+
+    </div><!-- /.row -->
+
+  </div><!-- /.container -->
+  
+  
+    <hr class="featurette-divider">
+    
+  <!-- FOOTER -->
+  <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+  </footer>
+  
+</div>
+
+
+
+
+{% endblock content %}

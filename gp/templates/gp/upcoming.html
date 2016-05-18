@@ -38,7 +38,7 @@
     
     
   
-  <h1 id="title_games">Upcoming tournaments</h1>
+  <center><h1>Upcoming tournaments</h1></center>
     
   {% for tournament in tournaments %}
   <div class="row featurette">
@@ -46,17 +46,50 @@
       <h3 class="featurette-heading" style="font-size: 3em;">{{ tournament }}       <span class="text-muted" style="font-size: 20px;">Date: {{ tournament.datetime }}</span></h3>
       <p class="lead">{{ tournament.description }}</p>
       <h4>Type: {{ tournament.tournament_type }}</h4>
-      <h4>Game: {{ tournament.game }}</h4>
+        <a href="{% url 'gp.views.detailed_game' pk=tournament.game.pk %}"><h4>Game: {{ tournament.game }}</h4></a>
+        <h4>Player per match: {{ tournament.players_per_match }}</h4>
+        <h4>Games to win the match: {{ tournament.games_to_win_the_match }}</h4>
+        <h4>Min-max players: {{ tournament.minPlayers }}-{{ tournament.maxPlayers }}</h4>
+        <h4>Registered players: {{ tournament.n_registered_players }}</h4>
+        
       <br>
       <!--<a href=""><button type="button" class="btn btn-info">Details</button></a>-->
-        {% if tournament in registered_t %}
-            
         
-                <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal2{{ tournament.pk }}">Unregister</button>   
-        
-        {% else %}
-            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal{{ tournament.pk }}">Register</button>   
+        {% if user.is_authenticated %}
+            {% if tournament in registered_t %}
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal3{{ tournament.pk }}">Change code</button> 
+                    <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal2{{ tournament.pk }}">Unregister</button>   
+            {% else %}
+                <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal{{ tournament.pk }}">Register</button>   
+            {% endif %}
         {% endif %}
+        
+        
+            <!-- Modal -->
+            <div class="modal fade" id="myModal3{{tournament.pk}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Change code for {{ tournament }}</h4>
+                  </div>
+                    <form role="role" method="post" action="/tournaments/change_code/" enctype="multipart/form-data">{% csrf_token %}
+                          <div class="modal-body">
+                                    Browse
+                                    <input name="docfile" type="file">
+                                    <input type="hidden" name="tournament" value="{{ tournament.pk }}">
+                            </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                          </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+        
         
         
             <!-- Modal -->
@@ -106,7 +139,6 @@
                             </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
                             <button type="submit" class="btn btn-primary">Register</button>
                           </div>
                     </form>
@@ -125,8 +157,7 @@
   <!-- FOOTER -->
   <footer>
     <p class="pull-right"><a href="#">Back to top</a></p>
-    <p>&copy; 2015 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-  </footer>
+   </footer>
 
 </div><!-- /.container -->
 
